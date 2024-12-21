@@ -83,29 +83,45 @@ Parameters:
       - false
 
   DatabaseInstanceClass:
-    Default: db.t2.micro
+    Default: db.t3.micro
     Type: String
     Description: "Database instance class, e.g. db.t2.micro (free tier) - Engine support: https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Concepts.DBInstanceClass.html"
     ConstraintDescription: DB instance class not supported
     AllowedValues:
-      - db.t2.micro
-      - db.t2.small
-      - db.t2.medium
-      - db.t2.large
-      - db.t2.xlarge
-      - db.t2.2xlarge
-      - db.m4.large
-      - db.m4.xlarge
-      - db.m4.2xlarge
-      - db.m4.4xlarge
-      - db.m4.10xlarge
-      - db.m4.16xlarge
-      - db.r4.large
-      - db.r4.xlarge
-      - db.r4.2xlarge
-      - db.r4.4xlarge
-      - db.r4.8xlarge
-      - db.r4.16xlarge
+      - db.t3.micro
+      - db.t3.small
+      - db.t3.medium
+      - db.t3.large
+      - db.t3.xlarge
+      - db.t3.2xlarge
+      - db.t4g.micro
+      - db.t4g.small
+      - db.t4g.medium
+      - db.t4g.large
+      - db.t4g.xlarge
+      - db.t4g.2xlarge
+      - db.m5.large
+      - db.m5.xlarge
+      - db.m5.2xlarge
+      - db.m5.4xlarge
+      - db.m5.8xlarge
+      - db.m5.12xlarge
+      - db.m5.16xlarge
+      - db.m5.24xlarge
+      - db.m5d.large
+      - db.m5d.xlarge
+      - db.m5d.2xlarge
+      - db.m5d.4xlarge
+      - db.m5d.8xlarge
+      - db.m5d.12xlarge
+      - db.m5d.16xlarge
+      - db.m5d.24xlarge
+      - db.r5g.large
+      - db.r5g.xlarge
+      - db.r5g.2xlarge
+      - db.r5g.4xlarge
+      - db.r5g.8xlarge
+      - db.r5g.16xlarge
 
   EnvironmentName:
     Description: Environment name, either dev or prod
