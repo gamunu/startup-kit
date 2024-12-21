@@ -9,7 +9,7 @@ Parameters:
 
   TemplateBucket:
     Type: String
-    Default: awslabs-startup-kit-templates-deploy-v5
+    Default: fastcode-cfn-startup-kit/v0.1.0
     Description: The template bucket for the CloudFormation templates
 
   # vpc.cfn.yml parameters
@@ -22,13 +22,6 @@ Parameters:
     Description: The second availability zone in the region
     Type: AWS::EC2::AvailabilityZone::Name
     ConstraintDescription: Must be a valid availability zone
-
-  SSHFrom:
-    Description: Limit SSH access to bastion hosts to a CIDR IP block
-    Type: String
-    MinLength: 9
-    MaxLength: 18
-    Default: 0.0.0.0/0
 
   ELBIngressPort:
     Description: The ELB ingress port used by security groups
@@ -468,8 +461,6 @@ Metadata:
         default: Log Retention
       MFA:
         default: Multi-Factor
-      SSHFrom:
-        default: SSH Whitelist
       TemplateBucket:
         default: CloudFormation Bucket
       EnvironmentName:
@@ -572,7 +563,6 @@ Resources:
       Parameters:
         AvailabilityZone1: !Ref AvailabilityZone1
         AvailabilityZone2: !Ref AvailabilityZone2
-        SSHFrom: !Ref SSHFrom
         ELBIngressPort: !Ref ELBIngressPort
         AppIngressPort: !Ref AppIngressPort
         SingleNatGateway: !If [ IsProd, false, true ]
