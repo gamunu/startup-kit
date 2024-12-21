@@ -105,7 +105,7 @@ Resources:
       AvailabilityZone: !Ref AvailabilityZone1
       Tags:
       - Key: Name
-        Value: !Sub "${AWS::StackName}-public1"
+        Value: !Sub "${AWS::StackName}-Public1"
 
   PublicSubnet2:
     Type: AWS::EC2::Subnet
@@ -115,7 +115,7 @@ Resources:
       AvailabilityZone: !Ref AvailabilityZone2
       Tags:
       - Key: Name
-        Value: !Sub "${AWS::StackName}-public2"
+        Value: !Sub "${AWS::StackName}-Public2"
 
   PrivateSubnet1:
     Type: AWS::EC2::Subnet
@@ -125,7 +125,7 @@ Resources:
       AvailabilityZone: !Ref AvailabilityZone1
       Tags:
       - Key: Name
-        Value: !Sub "${AWS::StackName}-private1"
+        Value: !Sub "${AWS::StackName}-Private1"
 
   PrivateSubnet2:
     Type: AWS::EC2::Subnet
@@ -135,14 +135,14 @@ Resources:
       AvailabilityZone: !Ref AvailabilityZone2
       Tags:
       - Key: Name
-        Value: !Sub "${AWS::StackName}-private2"
+        Value: !Sub "${AWS::StackName}-Private2"
 
   InternetGateway:
     Type: AWS::EC2::InternetGateway
     Properties:
       Tags:
         - Key: Name
-          Value: !Sub "${AWS::StackName}-igw"
+          Value: !Sub "${AWS::StackName}-IGW"
 
   VPCGatewayAttachment:
     Type: AWS::EC2::VPCGatewayAttachment
@@ -156,7 +156,7 @@ Resources:
       VpcId: !Ref VPC
       Tags:
       - Key: Name
-        Value: !Sub "${AWS::StackName}-public-igw"
+        Value: !Sub "${AWS::StackName}-PublicIGW"
 
   PublicRoute:
     Type: AWS::EC2::Route
@@ -302,7 +302,7 @@ Resources:
       VpcId: !Ref VPC
       Tags:
       - Key: Name
-        Value: !Sub "${AWS::StackName}-private-nat-1"
+        Value: !Sub "${AWS::StackName}-PrivateNat1"
 
   NatRouteTable2:
     Type: AWS::EC2::RouteTable
@@ -311,7 +311,7 @@ Resources:
       VpcId: !Ref VPC
       Tags:
       - Key: Name
-        Value: !Sub "${AWS::StackName}-private-nat-2"
+        Value: !Sub "${AWS::StackName}-PrivateNat2"
 
   NatRoute1:
     Type: AWS::EC2::Route
