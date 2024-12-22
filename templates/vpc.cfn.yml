@@ -73,6 +73,10 @@ Metadata:
         default: Load Balancer Port
       AppIngressPort:
         default: Application Port
+      SingleNatGateway:
+        default: Single NAT Gateway
+      AutoAssignPublicIp:
+        default: Auto Assign Public IP
 
 Conditions:
   CreateSingleNatGateway: !Equals [ !Ref SingleNatGateway, true ]
