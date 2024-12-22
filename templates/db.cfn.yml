@@ -41,10 +41,10 @@ Parameters:
     ConstraintDescription: Name must begin with a letter and contain only alphanumeric characters
 
   DatabaseSize:
-    Default: 5
+    Default: 20
     Type: Number
     Description: Database storage size in gigabytes (GB)
-    MinValue: 5
+    MinValue: 20
     ConstraintDescription: Enter a size of at least 5 GB
 
   # Default is 500 MB
