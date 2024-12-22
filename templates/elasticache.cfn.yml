@@ -78,10 +78,20 @@ Parameters:
     AllowedValues:
       - true
       - false
+  
+  PubliclyAccessible:
+    Default: false
+    Type: String
+    Description: Set to true to enable public access to the cache cluster
+    ConstraintDescription: Only true or false are allowed
+    AllowedValues:
+      - true
+      - false
 
 Conditions:
 
   IsRedis: !Equals [ !Ref CacheEngine, redis]
+  IsPubliclyAccessible: !Equals [ !Ref PubliclyAccessible, true ]
 
 Resources:
 
@@ -105,9 +115,12 @@ Resources:
     Type: AWS::ElastiCache::SubnetGroup
     Properties:
       Description: Cache Subnet Group
-      SubnetIds:
-        - Fn::ImportValue: !Sub ${NetworkStackName}-PrivateSubnet1ID
-        - Fn::ImportValue: !Sub ${NetworkStackName}-PrivateSubnet2ID
+      SubnetIds: !If
+        - IsPubliclyAccessible
+        - - Fn::ImportValue: !Sub ${NetworkStackName}-PublicSubnet1ID
+          - Fn::ImportValue: !Sub ${NetworkStackName}-PublicSubnet2ID
+        - - Fn::ImportValue: !Sub ${NetworkStackName}-PrivateSubnet1ID
+          - Fn::ImportValue: !Sub ${NetworkStackName}-PrivateSubnet2ID
 
   ElastiCacheCluster:
     Type: AWS::ElastiCache::CacheCluster
@@ -161,3 +174,9 @@ Outputs:
     Value: !If [ IsRedis, 6379, 11211]
     Export:
       Name: !Sub ${AWS::StackName}-ElastiCachePort
+  
+  IsPubliclyAccessible:
+    Description: Whether the ElastiCache cluster is publicly accessible
+    Value: !Ref PubliclyAccessible
+    Export:
+      Name: !Sub ${AWS::StackName}-IsPubliclyAccessible
