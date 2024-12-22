@@ -1,7 +1,7 @@
 ---
 AWSTemplateFormatVersion: 2010-09-09
 
-Description: SASKV5N VPC
+Description: VPC
 
 # This VPC stack should be created first before any other
 # CloudFormation stacks, such as a bastion stack, database
@@ -261,6 +261,15 @@ Resources:
       IpProtocol: tcp
       ToPort: 5432
       FromPort: 5432
+      SourceSecurityGroupId: !Ref AppSecurityGroup
+  
+  DbSecurityGroupFromAppMySqlIngress:
+    Type: AWS::EC2::SecurityGroupIngress
+    Properties:
+      GroupId: !Ref DbSecurityGroup
+      IpProtocol: tcp
+      ToPort: 3306
+      FromPort: 3306
       SourceSecurityGroupId: !Ref AppSecurityGroup
 
   # NAT-related resources

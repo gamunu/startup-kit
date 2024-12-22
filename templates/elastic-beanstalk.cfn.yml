@@ -1,6 +1,6 @@
 ---
 AWSTemplateFormatVersion: '2010-09-09'
-Description:  SASKV5N Elastic Beanstalk
+Description: Elastic Beanstalk
 
 # App stack creation prerequisites:  first create a VPC stack, then a DB stack.
 

@@ -4,7 +4,7 @@ AWSTemplateFormatVersion: 2010-09-09
 # A CloudFormation template to deploy an additional service to Fargate. This requires an existing
 # cluster deployed by fargate.cfn.yml.
 
-Description: SASKV5N Fargate Service
+Description: Fargate Service
 
 
 Parameters:
