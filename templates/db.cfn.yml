@@ -256,8 +256,6 @@ Resources:
         - IsPubliclyAccessible
         - - Fn::ImportValue: !Sub ${NetworkStackName}-PublicSubnet1ID
           - Fn::ImportValue: !Sub ${NetworkStackName}-PublicSubnet2ID
-          - Fn::ImportValue: !Sub ${NetworkStackName}-PrivateSubnet1ID
-          - Fn::ImportValue: !Sub ${NetworkStackName}-PrivateSubnet2ID
         - - Fn::ImportValue: !Sub ${NetworkStackName}-PrivateSubnet1ID
           - Fn::ImportValue: !Sub ${NetworkStackName}-PrivateSubnet2ID
       Tags:
