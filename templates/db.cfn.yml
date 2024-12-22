@@ -258,12 +258,12 @@ Resources:
       MasterUserPassword: !Ref DatabasePassword
       DBInstanceClass: !Ref DatabaseInstanceClass
       AllocatedStorage: !Ref DatabaseSize
-      StorageType: gp2
+      StorageType: gp3
       MultiAZ: !If [ IsProd, true, false ]
       StorageEncrypted: !Ref EncryptionAtRest
       MonitoringInterval: !If [ EnhancedMonitoringSupprtedAndEnabled, 60, 0 ]
       MonitoringRoleArn: !If [ EnhancedMonitoringSupprtedAndEnabled, !GetAtt EnhancedMonitoringRole.Arn, !Ref "AWS::NoValue" ]
-      PubliclyAccessible: !If [ PubliclyAccessible, true, false ]
+      PubliclyAccessible: !If [ IsPubliclyAccessible, true, false ]
       CopyTagsToSnapshot: true
       Tags:
       - Key: Name
