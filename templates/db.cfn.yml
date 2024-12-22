@@ -192,6 +192,24 @@ Parameters:
       - true
       - false
 
+  MultiAZ:
+    Default: false
+    Type: String
+    Description: Set to true to enable Multi-AZ deployment
+    ConstraintDescription: Only true or false are allowed
+    AllowedValues:
+      - true
+      - false
+
+  EngineLifecycleSupport:
+    Default: open-source-rds-extended-support-disabled
+    Type: String
+    Description: Set to true to enable engine lifecycle support
+    ConstraintDescription: Only open-source-rds-extended-support or open-source-rds-extended-support-disabled are allowed
+    AllowedValues:
+      - open-source-rds-extended-support
+      - open-source-rds-extended-support-disabled
+
 
 Conditions:
 
@@ -259,11 +277,12 @@ Resources:
       DBInstanceClass: !Ref DatabaseInstanceClass
       AllocatedStorage: !Ref DatabaseSize
       StorageType: gp3
-      MultiAZ: !If [ IsProd, true, false ]
+      MultiAZ: !Ref MultiAZ
       StorageEncrypted: !Ref EncryptionAtRest
       MonitoringInterval: !If [ EnhancedMonitoringSupprtedAndEnabled, 60, 0 ]
       MonitoringRoleArn: !If [ EnhancedMonitoringSupprtedAndEnabled, !GetAtt EnhancedMonitoringRole.Arn, !Ref "AWS::NoValue" ]
       PubliclyAccessible: !If [ IsPubliclyAccessible, true, false ]
+      EngineLifecycleSupport: !Ref EngineLifecycleSupport
       CopyTagsToSnapshot: true
       Tags:
       - Key: Name
