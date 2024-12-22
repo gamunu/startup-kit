@@ -14,7 +14,7 @@ Parameters:
     AllowedPattern: "^[a-zA-Z][-a-zA-Z0-9]*$"
 
   StackType:
-    Description: node, rails, python, python3 or spring
+    Description: node, rails, python3, php or spring
     Type: String
     MinLength: 1
     MaxLength: 255
@@ -22,9 +22,9 @@ Parameters:
       - node
       - rails
       - spring
-      - python
+      - php
       - python3
-    ConstraintDescription: Specify node, rails, python, python3 or spring
+    ConstraintDescription: Specify node, rails, python3, php or spring
 
   EnvironmentName:
     Description: Environment name, either dev or prod.
@@ -87,14 +87,14 @@ Parameters:
     Type: String
     MinLength: 1
     MaxLength: 255
-    Default: t2.micro
+    Default: t4g.micro
 
   ProdInstanceType:
     Description: The instance type for the prod environment
     Type: String
     MinLength: 1
     MaxLength: 255
-    Default: t2.large
+    Default: t4g.small
 
   SSLCertificateArn:
     Description: The SSL/TLS certificate ARN
@@ -129,15 +129,15 @@ Mappings:
   # Maps stack type parameter to solution stack name string
   StackMap:
     node:
-      stackName: 64bit Amazon Linux 2018.03 v4.5.3 running Node.js
+      stackName: 64bit Amazon Linux 2023 v6.4.1 running Node.js 22
     rails:
-      stackName: 64bit Amazon Linux 2018.03 v2.8.3 running Ruby 2.4 (Puma)
+      stackName: 64bit Amazon Linux 2023 v4.3.0 running Ruby 3.3
     spring:
-      stackName: 64bit Amazon Linux 2018.03 v3.0.3 running Tomcat 8 Java 8
-    python:
-      stackName: 64bit Amazon Linux 2018.03 v2.7.3 running Python 2.7
+      stackName: 64bit Amazon Linux 2023 v5.4.2 running Tomcat 10 Corretto 21
+    php:
+      stackName: 64bit Amazon Linux 2023 v4.4.2 running PHP 8.3
     python3:
-      stackName: 64bit Amazon Linux 2018.03 v2.7.3 running Python 3.6
+      stackName: 64bit Amazon Linux 2023 v4.3.2 running Python 3.12
 
 Resources:
 
@@ -216,15 +216,6 @@ Resources:
         OptionName: SecurityGroups
         Value:
           Fn::ImportValue: !Sub "${NetworkStackName}-AppSecurityGroupID"
-
-      - Namespace: aws:autoscaling:launchconfiguration
-        OptionName: SSHSourceRestriction
-        Value:
-          "Fn::Join":
-          - ','
-          - - 'tcp, 22, 22'
-            - !ImportValue
-                "Fn::Sub": "${NetworkStackName}-BastionGroupID"
 
       - Namespace: aws:autoscaling:launchconfiguration
         OptionName: InstanceType
