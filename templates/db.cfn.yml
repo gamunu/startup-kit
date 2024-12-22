@@ -183,12 +183,23 @@ Parameters:
       - true
       - false
 
+  PubliclyAccessible:
+    Default: false
+    Type: String
+    Description: Set to true to enable public access to the database
+    ConstraintDescription: Only true or false are allowed
+    AllowedValues:
+      - true
+      - false
+
 
 Conditions:
 
   IsProd: !Equals [ !Ref EnvironmentName, prod ]
 
   AlarmsEnabled: !Equals [ !Ref EnableAlarms, true ]
+
+  IsPubliclyAccessible: !Equals [ !Ref PubliclyAccessible, true ]
 
   EnhancedMonitoringSupprtedAndEnabled: !And
     - !Condition AlarmsEnabled
@@ -223,9 +234,14 @@ Resources:
     Type: AWS::RDS::DBSubnetGroup
     Properties:
       DBSubnetGroupDescription: Database subnet group
-      SubnetIds:
-      - Fn::ImportValue: !Sub ${NetworkStackName}-PrivateSubnet1ID
-      - Fn::ImportValue: !Sub ${NetworkStackName}-PrivateSubnet2ID
+      SubnetIds: !If 
+        - IsPubliclyAccessible
+        - - Fn::ImportValue: !Sub ${NetworkStackName}-PublicSubnet1ID
+          - Fn::ImportValue: !Sub ${NetworkStackName}-PublicSubnet2ID
+          - Fn::ImportValue: !Sub ${NetworkStackName}-PrivateSubnet1ID
+          - Fn::ImportValue: !Sub ${NetworkStackName}-PrivateSubnet2ID
+        - - Fn::ImportValue: !Sub ${NetworkStackName}-PrivateSubnet1ID
+          - Fn::ImportValue: !Sub ${NetworkStackName}-PrivateSubnet2ID
       Tags:
       - Key: Name
         Value: !Ref AWS::StackName
@@ -247,6 +263,7 @@ Resources:
       StorageEncrypted: !Ref EncryptionAtRest
       MonitoringInterval: !If [ EnhancedMonitoringSupprtedAndEnabled, 60, 0 ]
       MonitoringRoleArn: !If [ EnhancedMonitoringSupprtedAndEnabled, !GetAtt EnhancedMonitoringRole.Arn, !Ref "AWS::NoValue" ]
+      PubliclyAccessible: !If [ PubliclyAccessible, true, false ]
       CopyTagsToSnapshot: true
       Tags:
       - Key: Name
