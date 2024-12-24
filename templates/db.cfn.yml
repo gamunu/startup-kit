@@ -165,6 +165,46 @@ Parameters:
     MinValue: 60
     ConstraintDescription: Must be at least 60 seconds
 
+  EnablePerformanceInsights:
+    Default: true
+    Type: String
+    Description: Enable Performance Insights for database monitoring (free tier includes 7 days of history retention)
+    ConstraintDescription: Only true or false are allowed
+    AllowedValues:
+      - true
+      - false
+
+  PerformanceInsightsRetentionPeriod:
+    Default: 7
+    Type: Number
+    Description: Performance Insights data retention period in days. Free tier allows 7 days, paid tiers allow up to 24 months (731 days)
+    AllowedValues:
+      - 7
+      - 31
+      - 62
+      - 93
+      - 124
+      - 155
+      - 186
+      - 217
+      - 248
+      - 279
+      - 310
+      - 341
+      - 372
+      - 403
+      - 434
+      - 465
+      - 496
+      - 527
+      - 558
+      - 589
+      - 620
+      - 651
+      - 682
+      - 713
+      - 731
+
   EnhancedMonitoring:
     Default: false
     Type: String
@@ -277,6 +317,8 @@ Resources:
       StorageType: gp3
       MultiAZ: !Ref MultiAZ
       StorageEncrypted: !Ref EncryptionAtRest
+      EnablePerformanceInsights: !Ref EnablePerformanceInsights
+      PerformanceInsightsRetentionPeriod: !Ref PerformanceInsightsRetentionPeriod
       MonitoringInterval: !If [ EnhancedMonitoringSupprtedAndEnabled, 60, 0 ]
       MonitoringRoleArn: !If [ EnhancedMonitoringSupprtedAndEnabled, !GetAtt EnhancedMonitoringRole.Arn, !Ref "AWS::NoValue" ]
       PubliclyAccessible: !If [ IsPubliclyAccessible, true, false ]
